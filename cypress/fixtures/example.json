@@ -1,4 +1,5 @@
 {
   "email": "gocool@mailinator.com",
-  "password": "testing123"
+  "password": "testing123",
+  "invalidEmail": "goc@mailinator.com"
 }

@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -10,20 +11,36 @@
 //
 //
 // -- This is a parent command --
+const apiUrl = Cypress.env('apiUrl')
+
 Cypress.Commands.add("login", (email, password) => { 
-    cy.visit('http://localhost:4100/');
+    cy.visit('/');
     cy.get("[href='/login']").click();
     cy.get("[type='email']").type(email);
     cy.get("[type='password']").type(password);
     cy.get("[type='submit']").click();
-})
+});
 
 Cypress.Commands.add("logout", () => {
     cy.get("[href='/settings']").click();
     cy.get(".btn-outline-danger").click();
     cy.contains('Sign in');
-})
+});
 
+Cypress.Commands.add("apiLogin", () => {
+    cy.getLoginToken().then(token => {
+        localStorage.setItem('jwt', token)
+    });
+});
+
+Cypress.Commands.add("getLoginToken", () => {
+    return cy
+        .request('POST', `${apiUrl}/api/users/login`,
+                        { user:{ email: "gocool@mailinator.com",password: "testing123"}}
+                )
+        .its('body.user.token')
+        .should('exist')
+})
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })

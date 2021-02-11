@@ -1,1 +1,6 @@
-{}
+{
+    "baseUrl": "http://localhost:4100/",
+    "env": {
+        "apiUrl": "https://conduit.productionready.io"
+    }
+}

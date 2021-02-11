@@ -1,3 +1,4 @@
+  /// <reference types="cypress" />
 const { before } = require("mocha");
 
 describe('Login tests for application', () => {
@@ -15,4 +16,9 @@ describe('Login tests for application', () => {
           .should('have.class', 'active');
         cy.logout();
     })
+
+    it('Login with invalid credentials', function() {
+        cy.login(this.data.invalidEmail, this.data.password);
+        cy.get('.error-messages').should('have.text', 'email or password is invalid');
+    });
 })
