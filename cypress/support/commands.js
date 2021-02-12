@@ -41,6 +41,19 @@ Cypress.Commands.add("getLoginToken", () => {
         .its('body.user.token')
         .should('exist')
 })
+
+Cypress.Commands.add("apiDeleteArticle", (slug) => {
+    cy.getLoginToken().then(token => {
+        cy.request({
+            method: 'DELETE',
+            url: `${apiUrl}/api/articles/${slug}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            }
+        });
+    });
+});
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
