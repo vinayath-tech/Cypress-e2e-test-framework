@@ -1,24 +1,25 @@
   /// <reference types="cypress" />
-const { before } = require("mocha");
+import * as homePageSelect from '../../../selectors/home-page-selectors';
+import * as loginPageSelect from '../../../selectors/login-selectors';
 
 describe('Login tests for application', () => {
 
     beforeEach(function() {
-        cy.fixture('example').then((data) => {
-            this.data = data;
+        cy.fixture('user_login').as('login').then((login) => {
+            this.login = login;
         })
     })
 
     it('Login with valid credentials', function() {
-        cy.login(this.data.email, this.data.password);
-        cy.get('.outline-active .nav-item a')
+        cy.login(this.login.user.email, this.login.user.password);
+        homePageSelect.navLink()
           .contains('Your Feed')
           .should('have.class', 'active');
         cy.logout();
     })
 
     it('Login with invalid credentials', function() {
-        cy.login(this.data.invalidEmail, this.data.password);
-        cy.get('.error-messages').should('have.text', 'email or password is invalid');
+        cy.login(this.login.user.email, 'test');
+        loginPageSelect.errorButton().should('have.text', 'email or password is invalid');
     });
 })
