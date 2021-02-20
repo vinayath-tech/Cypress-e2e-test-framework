@@ -28,7 +28,6 @@ describe('Article use case',() => {
 
     it('Verify article is successfully created',() => {
         viewArticleSelect.headerEle().should("have.text", "Test title");
-        viewArticleSelect.authorEle().should("have.text", "gocool345");
         viewArticleSelect.bodyEle().should("have.text", "Test body");
         viewArticleSelect.editBtn().then(($el) => {
             expect($el).to.be.visible;

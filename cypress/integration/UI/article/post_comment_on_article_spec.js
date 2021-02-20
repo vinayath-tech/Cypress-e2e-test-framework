@@ -12,7 +12,6 @@ describe('Add comments to an article',() => {
     });
 
     it('Post an comment to the article',() => {
-        cy.log('I am in the test step');
         cy.visit(`http://localhost:4100/article/${slug}`);
         viewArticleSelect.commentBox().type('This is a test comment');
         viewArticleSelect.submitBtn().click();

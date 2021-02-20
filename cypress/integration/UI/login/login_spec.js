@@ -18,8 +18,18 @@ describe('Login tests for application', () => {
         cy.logout();
     })
 
-    it('Login with invalid credentials', function() {
+    it('Login with invalid email and password', function() {
+        cy.login('test@test.com', 'test');
+        loginPageSelect.errorButton().should('have.text', 'email or password is invalid');
+    });
+
+    it('Login with invalid password', function() {
         cy.login(this.login.user.email, 'test');
+        loginPageSelect.errorButton().should('have.text', 'email or password is invalid');
+    });
+
+    it('Login with invalid email', function() {
+        cy.login('test@test.com', this.login.user.password);
         loginPageSelect.errorButton().should('have.text', 'email or password is invalid');
     });
 })
